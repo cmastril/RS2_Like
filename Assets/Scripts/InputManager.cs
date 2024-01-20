@@ -7,8 +7,11 @@ public class InputManager : MonoBehaviour
 {
     //Events
     public UnityEvent submissionButtonPressed = new UnityEvent();
+
     public UnityEvent upButtonPressed = new UnityEvent();
     public UnityEvent downButtonPressed = new UnityEvent();
+    public UnityEvent rightButtonPressed = new UnityEvent();
+    public UnityEvent leftButtonPressed = new UnityEvent();
 
     private void Update()
     {
@@ -18,8 +21,11 @@ public class InputManager : MonoBehaviour
     private void DetectInputs()
     {
         DetectSubmissionButton();
+
         DetectUpButton();
         DetectDownButton();
+        DetectRightButton();
+        DetectLeftButton();
     }
 
     private void DetectSubmissionButton()
@@ -43,6 +49,22 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             downButtonPressed.Invoke();
+        }
+    }
+
+    private void DetectRightButton()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            upButtonPressed.Invoke();
+        }
+    }
+
+    private void DetectLeftButton()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            upButtonPressed.Invoke();
         }
     }
 
