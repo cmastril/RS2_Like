@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class WorldCursorHandle : MonoBehaviour
 {
+    //Events
+    public UnityEvent selectionMoved = new UnityEvent();
+
     //References
     private InputManager inputManager;
 
@@ -16,17 +21,20 @@ public class WorldCursorHandle : MonoBehaviour
         inputManager = Object.FindObjectOfType<InputManager>();
 
         //Set Listeners
-        Debug.Log(inputManager);
         inputManager.rightButtonPressed.AddListener(MoveSelectionRight);
         inputManager.leftButtonPressed.AddListener(MoveSelectionLeft);
+        inputManager.upButtonPressed.AddListener(MoveSelectionUp);
+        inputManager.downButtonPressed.AddListener(MoveSelectionDown);
+        inputManager.submissionButtonPressed.AddListener(LoadCurrentRegion);
 
         //Initialize
         Initialize();
     }
 
+    [SerializeField] private WorldNode startNode;
     private void Initialize()
     {
-        currentSelection = GameObject.FindObjectOfType<WorldNode>();
+        SetSelection(startNode);
     }
 
     private void MoveSelectionRight()
@@ -36,7 +44,7 @@ public class WorldCursorHandle : MonoBehaviour
         //Check if can move
         if (rightReference == null) return;
 
-        currentSelection = rightReference;
+        SetSelection(rightReference);
     }
 
     private void MoveSelectionLeft()
@@ -46,7 +54,39 @@ public class WorldCursorHandle : MonoBehaviour
         //Check if can move
         if (leftReference == null) return;
 
-        currentSelection = leftReference;
+        SetSelection(leftReference);
+    }
+
+    private void MoveSelectionUp()
+    {
+        WorldNode upReference = currentSelection.upReference;
+
+        //Check if can move
+        if (upReference == null) return;
+
+        SetSelection(upReference);
+    }
+
+    private void MoveSelectionDown()
+    {
+        WorldNode downReference = currentSelection.downReference;
+
+        //Check if can move
+        if (downReference == null) return;
+
+        SetSelection(downReference);
+    }
+
+    private void LoadCurrentRegion()
+    {
+        string sceneString = currentSelection.regionSceneName;
+        SceneManager.LoadScene(sceneString);
+    }
+
+    private void SetSelection(WorldNode newNode)
+    {
+        currentSelection = newNode;
+        selectionMoved.Invoke();
     }
 
 }

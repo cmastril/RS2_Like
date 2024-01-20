@@ -5,6 +5,19 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
+    //Singleton
+    private static InputManager inputManager = null;
+    void Awake()
+    {
+        if (inputManager == null)
+        {
+            inputManager = this;
+            DontDestroyOnLoad(this.gameObject);
+            return;
+        }
+        Destroy(this.gameObject);
+    }
+
     //Events
     public UnityEvent submissionButtonPressed = new UnityEvent();
 
@@ -56,7 +69,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            upButtonPressed.Invoke();
+            rightButtonPressed.Invoke();
         }
     }
 
@@ -64,7 +77,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            upButtonPressed.Invoke();
+            leftButtonPressed.Invoke();
         }
     }
 
