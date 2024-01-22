@@ -34,11 +34,28 @@ public class InputManager : MonoBehaviour
     private void DetectInputs()
     {
         DetectSubmissionButton();
+        DetectDirectionKeys();
+    }
 
-        DetectUpButton();
-        DetectDownButton();
-        DetectRightButton();
-        DetectLeftButton();
+    private void DetectDirectionKeys()
+    {
+        //Key Down Detection
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            upButtonPressed.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            downButtonPressed.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            rightButtonPressed.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            leftButtonPressed.Invoke();
+        }
     }
 
     private void DetectSubmissionButton()
@@ -46,38 +63,6 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             submissionButtonPressed.Invoke();
-        }
-    }
-
-    private void DetectUpButton()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            upButtonPressed.Invoke();
-        }
-    }
-
-    private void DetectDownButton()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            downButtonPressed.Invoke();
-        }
-    }
-
-    private void DetectRightButton()
-    {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            rightButtonPressed.Invoke();
-        }
-    }
-
-    private void DetectLeftButton()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            leftButtonPressed.Invoke();
         }
     }
 
